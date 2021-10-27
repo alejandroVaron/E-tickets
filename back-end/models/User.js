@@ -1,4 +1,5 @@
-import { Model, DataTypes } from "sequelize";
+import pkg from "sequelize";
+const { Model, DataTypes } = pkg;
 import { sequelize } from "../models/db.js";
 
 class User extends Model {
@@ -18,14 +19,19 @@ User.init(
     user_email: {
       type: DataTypes.STRING,
       unique: true,
+      allowNull: false,
     },
-    user_password: DataTypes.STRING,
+    user_password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     id_company: {
       type: DataTypes.INTEGER,
       references: {
         model: "Company",
         key: "id_company",
       },
+      allowNull: false,
     },
   },
   {
@@ -34,4 +40,4 @@ User.init(
   }
 );
 
-module.exports = User;
+export default User;

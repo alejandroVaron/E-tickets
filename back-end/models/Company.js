@@ -1,4 +1,5 @@
-import { Model, DataTypes } from "sequelize";
+import pkg from 'sequelize';
+const { Model, DataTypes } = pkg;
 import { sequelize } from "../models/db.js";
 
 class Company extends Model {
@@ -14,9 +15,12 @@ Company.init(
     },
     company_name: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     company_nit: {
       type: DataTypes.STRING,
+      allowNull: false,
+      unique: false
     },
     company_cellphone: {
       type: DataTypes.STRING,
@@ -34,4 +38,4 @@ Company.init(
   }
 );
 
-module.exports = Company;
+export default Company;

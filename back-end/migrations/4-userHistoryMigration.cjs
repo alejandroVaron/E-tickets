@@ -14,6 +14,7 @@ module.exports = {
           model: "Project",
           key: "id_project",
         },
+        allowNull: false
       },
       userHistory_description: {
         type: Sequelize.STRING,

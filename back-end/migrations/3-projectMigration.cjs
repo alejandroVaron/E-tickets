@@ -14,6 +14,7 @@ module.exports = {
           model: "Company",
           key: "id_company",
         },
+        allowNull: false
       },
       project_description: {
         type: Sequelize.STRING,
