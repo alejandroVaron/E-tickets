@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import { config } from "../config/configInApp/config.js";
-var database = 0; // 0 = Localhost database  ||  1 = Heroku database
+var database = 1; // 0 = Localhost database  ||  1 = Heroku database
 var heroku = 0;
 let sequelizeOb;
 if (!process.env.DATABASE_URL) {
