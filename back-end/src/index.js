@@ -3,6 +3,12 @@ import bodyParser from "body-parser";
 import urlShortener from "node-url-shortener";
 import cors from "cors";
 import { sequelize } from "../models/db.js";
+import UserRoutes from './routes/UserRoutes.js';
+import CompanyRoutes from './routes/CompanyRoutes.js';
+import ProjectRoutes from './routes/ProjectRoutes.js';
+import UserHistoryRoutes from './routes/UserHistoryRoutes.js';
+import TicketRoutes from './routes/TicketRoutes.js';
+
 const app = express();
 var port = process.env.PORT || 3000;
 if (!process.env.DATABASE_URL) {
@@ -25,8 +31,15 @@ app.post("/url", function (req, res) {
   });
 });
 
+app.use('/api/user', UserRoutes);
+app.use('/api/company', CompanyRoutes);
+app.use('/api/project', ProjectRoutes);
+app.use('/api/userHistory', UserHistoryRoutes);
+app.use('/api/ticket', TicketRoutes);
+
+
 sequelize
-  .sync({ force: true, logging: console.log })
+  .sync({ force: false, logging: console.log })
   .then(() => {
     console.log("¡We connect to the database!");
 

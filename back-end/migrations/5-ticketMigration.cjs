@@ -14,6 +14,7 @@ module.exports = {
           model: "UserHistory",
           key: "id_userHistory",
         },
+        allowNull: false
       },
       ticket_comment: {
         type: Sequelize.STRING,

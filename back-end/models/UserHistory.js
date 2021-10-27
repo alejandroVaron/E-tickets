@@ -1,4 +1,5 @@
-import { Model, DataTypes } from "sequelize";
+import pkg from 'sequelize';
+const { Model, DataTypes } = pkg;
 import { sequelize } from "../models/db.js";
 
 class UserHistory extends Model {
@@ -18,6 +19,7 @@ UserHistory.init(
         model: "Project",
         key: "id_project",
       },
+      allowNull: false
     },
     userHistory_description: {
       type: DataTypes.STRING,
@@ -32,4 +34,4 @@ UserHistory.init(
   }
 );
 
-module.exports = UserHistory;
+export default UserHistory;

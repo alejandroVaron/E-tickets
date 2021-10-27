@@ -1,4 +1,5 @@
-import { Model, DataTypes } from "sequelize";
+import pkg from 'sequelize';
+const { Model, DataTypes } = pkg;
 import { sequelize } from "../models/db.js";
 
 class Ticket extends Model {
@@ -18,6 +19,7 @@ Ticket.init(
         model: "UserHistory",
         key: "id_userHistory",
       },
+      allowNull: false
     },
     ticket_comment: {
       type: DataTypes.STRING,
@@ -32,4 +34,4 @@ Ticket.init(
   }
 );
 
-module.exports = Ticket;
+export default Ticket;

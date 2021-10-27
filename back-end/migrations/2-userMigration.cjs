@@ -14,9 +14,11 @@ module.exports = {
       user_email: {
         type: Sequelize.STRING,
         unique: true,
+        allowNull: false
       },
       user_password: {
         type: Sequelize.STRING,
+        allowNull: false
       },
       id_company: {
         type: Sequelize.INTEGER,
@@ -24,6 +26,7 @@ module.exports = {
           model: "Company",
           key: "id_company",
         },
+        allowNull: false
       },
     });
   },

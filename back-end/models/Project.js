@@ -1,4 +1,5 @@
-import { Model, DataTypes } from "sequelize";
+import pkg from 'sequelize';
+const { Model, DataTypes } = pkg;
 import { sequelize } from "../models/db.js";
 
 class Project extends Model {
@@ -18,6 +19,7 @@ Project.init(
         model: "Company",
         key: "id_company",
       },
+      allowNull: false
     },
     project_description: {
       type: DataTypes.STRING,
@@ -32,4 +34,4 @@ Project.init(
   }
 );
 
-module.exports = Project;
+export default Project;

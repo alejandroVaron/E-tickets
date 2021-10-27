@@ -10,9 +10,12 @@ module.exports = {
       },
       company_name: {
         type: Sequelize.STRING,
+        allowNull: false
       },
       company_nit: {
         type: Sequelize.STRING,
+        unique: false,
+        allowNull: false
       },
       company_cellphone: {
         type: Sequelize.STRING,
