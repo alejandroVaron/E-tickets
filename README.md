@@ -7,3 +7,5 @@ Aplicación desplegada en heroku:
 https://e-ticket-app.herokuapp.com/
 
 ![Screen](https://user-images.githubusercontent.com/53543861/139439114-9c14766d-a33d-482d-84f4-3be62dcd222b.png)
+
+*Nota: Después de media hora de inactividad en la app, los dynos de heroku se suspenden; se debe esperar unos segundos a que la aplicación se despierte.
