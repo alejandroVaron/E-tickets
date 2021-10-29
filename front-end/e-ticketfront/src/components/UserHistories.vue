@@ -21,7 +21,7 @@
       <v-divider class="mx-4"></v-divider>
       <v-row
         dense
-        style="margin-top: 2%; margin-left: 2%; margin-right: 2%; height: 80%"
+        style="margin-top: 2%; margin-left: 2%; margin-right: 2%; height: 81.8%"
       >
         <v-col
           v-for="userHistory in userHistories"
@@ -54,7 +54,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 flat
-                style="margin: 2%"
+                style="margin: 2%; "
                 v-bind="attrs"
                 v-on="on"
                 @click="dialog = true"
@@ -125,15 +125,18 @@ export default {
   methods: {
     ...mapMutations(["setUserHistory"]),
     getUserHistories() {
+      this.loadedAlert = true;
       this.axios
         .get(
           "https://e-ticketsfrontend.herokuapp.com/api/userHistory/project=" +
             this.project.id_project
         )
         .then((response) => {
+          this.loadedAlert = false;
           this.userHistories = response.data.data;
         })
         .catch((error) => {
+          this.loadedAlert = false;
           console.log(error);
         });
     },
@@ -156,6 +159,7 @@ export default {
       }
     },
     createUserHistory() {
+      this.loadedAlert = true;
       let userHistory = {
         id_project: this.project.id_project,
         userHistory_description: this.userHistoryDescription,
@@ -167,6 +171,7 @@ export default {
           userHistory
         )
         .then((response) => {
+          this.loadedAlert = false;
           console.log(response);
           this.getUserHistories();
           this.dialog = false;
@@ -175,8 +180,11 @@ export default {
             "¡La historia de usuario de ha creado con éxito!",
             "success"
           );
+          this.userHistoryDescription="";
+          this.userHistoryImage="";
         })
         .catch((error) => {
+          this.loadedAlert = false;
           console.log(error);
           if (error.message == "Request failed with status code 400") {
             this.alert(
@@ -255,5 +263,8 @@ export default {
   height: 3.5vh;
   width: 34vh;
   border: 1px solid black;
+}
+.sd{
+  background: #02aa0294;
 }
 </style>

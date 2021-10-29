@@ -22,7 +22,17 @@
       >
         <v-card width="45vh" height="45vh">
           <div class="titleCard">
-            <h2>Editar ticket</h2>
+            <h2 style="margin-left: 7%">Editar ticket</h2>
+            <v-btn
+              fab
+              dark
+              small
+              color="red"
+              style="left: 18%"
+              @click="deleteTicket"
+            >
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
           </div>
           <div style="height: 70%">
             <div class="inputBodyEditCard">
@@ -157,7 +167,7 @@
                 style="margin: 2%"
                 v-bind="attrs"
                 v-on="on"
-                @click="dialog = true"
+                @click="openDialog"
               >
                 Crear Ticket
               </v-btn>
@@ -220,6 +230,7 @@ export default {
         { state_name: "En proceso", state_value: "inProcess" },
         { state_name: "Finalizado", state_value: "finalized" },
       ],
+      loadedAlert: false,
     };
   },
   methods: {
@@ -230,6 +241,7 @@ export default {
       this.$router.back();
     },
     getTickets() {
+      this.loadedAlert = true;
       this.activeTickets = [];
       this.inProcessTickets = [];
       this.finalizedTickets = [];
@@ -239,6 +251,7 @@ export default {
             this.userHistory.id_userHistory
         )
         .then((response) => {
+          this.loadedAlert = false;
           for (var ticket of response.data.data) {
             switch (ticket.ticket_state) {
               case "active":
@@ -254,6 +267,7 @@ export default {
           }
         })
         .catch((error) => {
+          this.loadedAlert = false;
           console.log(error);
         });
     },
@@ -262,7 +276,6 @@ export default {
       this.ticketSelected = ticket;
       this.ticketDescription = ticket.ticket_comment;
       this.selectState = ticket.ticket_state;
-      console.log(ticket);
     },
     validateFieldToEdit() {
       if (this.ticketDescription == "") {
@@ -278,19 +291,25 @@ export default {
         this.createTicket();
       }
     },
+    openDialog() {
+      this.ticketDescription = "";
+      this.dialog = true;
+    },
     createTicket() {
+      this.loadedAlert = true;
       let ticket = {
         id_userHistory: this.userHistory.id_userHistory,
         ticket_comment: this.ticketDescription,
         ticket_state: "active",
       };
-      console.log(ticket);
       this.axios
         .post("https://e-ticketsfrontend.herokuapp.com/api/ticket", ticket)
         .then((response) => {
+          this.loadedAlert = false;
           this.getTickets();
           this.dialog = false;
           if (response.statusText == "Created") {
+            this.loadedAlert = false;
             this.alert(
               "Ticket creado",
               "¡El ticket se ha creado con éxito!",
@@ -309,7 +328,35 @@ export default {
           this.dialog = false;
         });
     },
+    deleteTicket() {
+      this.loadedAlert = true;
+      this.axios
+        .delete(
+          "https://e-ticketsfrontend.herokuapp.com/api/ticket/id=" +
+            this.ticketSelected.id_ticket
+        )
+        .then(() => {
+          this.loadedAlert = false;
+          this.getTickets();
+          this.dialogTicket = false;
+            this.alert(
+              "Ticket borrado",
+              "¡El ticket se ha borrado con éxito!",
+              "success"
+            );
+        })
+        .catch(() => {
+          this.loadedAlert = false;
+            this.alert(
+              "Error",
+              "¡No se ha podido borrar el ticket!",
+              "error"
+            );
+          this.dialogTicket = false;
+        });
+    },
     editTicket() {
+      this.loadedAlert = true;
       let ticket = {
         ticket_comment: this.ticketDescription,
         ticket_state: this.selectState,
@@ -321,6 +368,7 @@ export default {
           ticket
         )
         .then((response) => {
+          this.loadedAlert = false;
           this.getTickets();
           this.dialogTicket = false;
           if (response.statusText == "Created") {
@@ -332,6 +380,7 @@ export default {
           }
         })
         .catch((error) => {
+          this.loadedAlert = false;
           if (error.message == "Request failed with status code 400") {
             this.alert(
               "Error",
