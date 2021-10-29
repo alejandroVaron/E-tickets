@@ -3,7 +3,10 @@
     <v-card class="mx-auto" width="85%" height="85%" elevation="7">
       <v-card-title> {{ companyName }} → Proyectos: </v-card-title>
       <v-divider class="mx-4"></v-divider>
-      <v-row dense style="margin-top: 2%; margin-left: 2%; margin-right: 2%">
+      <v-row
+        dense
+        style="margin-top: 2%; margin-left: 2%; margin-right: 2%; height: 81%"
+      >
         <v-col
           v-for="project in projects"
           :value="project.id_project"
@@ -30,6 +33,11 @@
           </v-card>
         </v-col>
       </v-row>
+      <div id="footerDiv">
+        <div id="footer2CardDiv">
+          <v-btn flat style="right: 6%; width: 100%;" @click="logout"> Cerrar sesión </v-btn>
+        </div>
+      </div>
     </v-card>
   </div>
 </template>
@@ -63,7 +71,10 @@ export default {
     },
     selectProject(projectS) {
       this.setProject(projectS);
-      this.$router.push({ name: "UserHistories"});
+      this.$router.push({ name: "UserHistories" });
+    },
+    logout(){
+      this.$router.push({ name: "Login" });
     },
     getCompany() {
       this.axios
@@ -92,6 +103,12 @@ export default {
   height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+#footerDiv {
+  height: 11.3%;
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 </style>
